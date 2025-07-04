@@ -4,8 +4,13 @@ const { validationResult } = require('express-validator');
 const User = require('../models/User');
 
 exports.register = async (req, res) => {
+    console.log('📩 Registering user with data:', req.body);
+
   const errors = validationResult(req);
-  if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
+  if (!errors.isEmpty()) {
+    console.log('❌ Validation errors:', errors.array());
+    return res.status(400).json({ errors: errors.array() });
+  }
 
   const { email, password, role } = req.body;
   try {
